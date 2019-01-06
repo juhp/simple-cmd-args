@@ -1,0 +1,38 @@
+cabal-version:       2.0
+name:                simple-cmd-args
+version:             0.0.0
+synopsis:            See README for more info
+description:         See README for more info
+homepage:            https://github.com/juhp/simple-cmd-args
+bug-reports:         https://github.com/juhp/simple-cmd-args/issues
+license:             MIT
+license-file:        LICENSE
+author:              Jens Petersen
+maintainer:          juhpetersen@gmail.com
+copyright:           2019 Jens Petersen
+build-type:          Simple
+extra-doc-files:     README.md
+                   , CHANGELOG.md
+tested-with:         GHC == 7.10.3, GHC == 8.0.1, GHC == 8.0.2, GHC == 8.2.2, GHC == 8.4.3, GHC == 8.4.4
+
+source-repository head
+  type:                git
+  location:            https://github.com/juhp/simple-cmd-args.git
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     SimpleCmdArgs
+                       
+
+  build-depends:       base >= 4.8.0.2 && < 4.12
+                     
+
+  ghc-options:         -Wall
+                       -Wincomplete-uni-patterns
+                       -Wincomplete-record-updates
+                       -Wcompat
+                       -Widentities
+                       
+
+  default-language:    Haskell2010
+  default-extensions:  OverloadedStrings
