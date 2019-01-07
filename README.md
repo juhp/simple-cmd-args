@@ -7,7 +7,8 @@
 [![Build status](https://secure.travis-ci.org/juhp/simple-cmd-args.svg)](https://travis-ci.org/juhp/simple-cmd-args)
 
 A thin layer over optparse-applicative that avoids type plumbing for
-the common use case of a commandline tool with subcommands.
+the common use case of a commandline tool with subcommands,
+by using `Parser (IO ())`
 
 ## Example
 
@@ -21,7 +22,8 @@ import Control.Applicative (some)
 import SimpleCmd (cmd_)
 
 main =
-  toolWithCommands emptyVersion "my example tool" "Longer description..."
-    [ Subcommand "hello" (putStrLn <$> strArg "NAME") "Print name"
-    , Subcommand "ls" (cmd_ "ls" <$> some (strArg "FILE")) "Touch FILE"
+  toolWithCommands Nothing "my example tool" "Longer description..."
+    [ Subcommand "echo" (putStrLn <$> strArg "NAME") "Print name"
+    , Subcommand "ls" (cmd_ "ls" <$> some (strArg "FILE...")) "Touch FILE"
     ]
+```

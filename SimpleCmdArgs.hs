@@ -1,20 +1,20 @@
 module SimpleCmdArgs
-  (emptyVersion,
-   strArg,
+  (strArg,
    Subcommand(..),
    toolWithCommands)
 where
 
-import Options.Applicative
+import Control.Monad (join)
+-- import Data.Maybe (maybe)
 import Data.Semigroup ((<>))
 import Data.Version
-import Control.Monad (join)
+import Options.Applicative
 
 data Subcommand = Subcommand String (Parser (IO ())) String
 
 -- | Parser executor for tool with subcommands
 toolWithCommands
-  :: Version
+  :: Maybe Version
   -- ^ version string
   -> String
   -- ^ header
@@ -23,14 +23,16 @@ toolWithCommands
   -> [Subcommand]
   -- ^ commands
   -> IO ()
-toolWithCommands version h pd cmds = join $ 
+toolWithCommands mversion h pd cmds = join $
   customExecParser (prefs showHelpOnEmpty)
-  (info (helper <*> versionOption <*> cmdsParser) desc)
+  (case mversion of
+    (Just version) -> info (versionOption version <*> helper <*> cmdsParser) desc
+    Nothing -> info (helper <*> cmdsParser) desc)
   where 
     desc = fullDesc <> header h <> progDesc pd
 
-    versionOption =
-      infoOption (showVersion version) (long "version" <> help "Show version")
+    versionOption ver =
+      infoOption (showVersion ver) (long "version" <> help "Show version")
 
     cmdsParser :: Parser (IO ())
     cmdsParser = subparser $ mconcat $ map cmdToParse cmds
@@ -40,6 +42,3 @@ toolWithCommands version h pd cmds = join $
 
 strArg :: String -> Parser String
 strArg var = strArgument (metavar var)
-
-emptyVersion :: Version
-emptyVersion = makeVersion []
