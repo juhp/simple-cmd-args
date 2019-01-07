@@ -5,7 +5,10 @@ module SimpleCmdArgs
 where
 
 import Control.Monad (join)
--- import Data.Maybe (maybe)
+#if (defined(MIN_VERSION_base) && MIN_VERSION_base(4,8,0))
+#else
+import Data.Monoid (mconcat)
+#endif
 import Data.Semigroup ((<>))
 import Data.Version
 import Options.Applicative
