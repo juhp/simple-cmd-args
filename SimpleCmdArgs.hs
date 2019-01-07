@@ -29,7 +29,7 @@ toolWithCommands
 toolWithCommands mversion h pd cmds = join $
   customExecParser (prefs showHelpOnEmpty)
   (case mversion of
-    (Just version) -> info (versionOption version <*> helper <*> cmdsParser) desc
+    (Just version) -> info (helper <*> versionOption version <*> cmdsParser) desc
     Nothing -> info (helper <*> cmdsParser) desc)
   where 
     desc = fullDesc <> header h <> progDesc pd
