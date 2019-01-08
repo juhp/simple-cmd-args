@@ -12,7 +12,7 @@ by using `Parser (IO ())`
 
 ## Example
 
-See example/example.hs for a simple example.
+See [https://github.com/juhp/simple-cmd-args/tree/master/examples](examples/)
 
 ## Usage
 
