@@ -6,11 +6,12 @@ import System.Directory (listDirectory)
 import Options.Applicative (some)
 
 main =
-  toolWithCommands (Just ver) "An example cli tool" "Longer description..."
-    [ Subcommand "hello" (pure (putStrLn "hello")) "Print hello"
-    , Subcommand "list" (ls <$> strArg "DIR") "List DIR"
-    , Subcommand "touch" (cmd_ "touch" <$> some (strArg "FILE")) "Touch FILE"
-    ]
+  simpleCmdArgs (Just ver) "An example cli tool" "Longer description..." $
+  subcommands
+  [ Subcommand "hello" (pure (putStrLn "hello")) "Print hello"
+  , Subcommand "list" (ls <$> strArg "DIR") "List DIR"
+  , Subcommand "touch" (cmd_ "touch" <$> some (strArg "FILE")) "Touch FILE"
+  ]
   where
     ver = makeVersion [0,1]
 
