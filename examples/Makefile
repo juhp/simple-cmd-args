@@ -1,7 +1,10 @@
-all: example readme
+all: subcmds readme opts
 
-example: example.hs
-	ghc example.hs
+subcmds: subcmds.hs
+	ghc subcmds.hs
 
 readme: readme.hs
 	ghc readme.hs
+
+opts: opts.hs
+	ghc opts.hs
