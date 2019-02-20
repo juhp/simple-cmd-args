@@ -1,9 +1,12 @@
 module SimpleCmdArgs
-  (simpleCmdArgs,
+  (optionMods,
+   optionalMods,
+   simpleCmdArgs,
    simpleCmdArgs',
    strArg,
    Subcommand(..),
-   subcommands
+   subcommands,
+   switchMods
   )
 where
 
@@ -76,3 +79,18 @@ subcommands = subparser . mconcat . map cmdToParse
 
 strArg :: String -> Parser String
 strArg var = strArgument (metavar var)
+
+switchMods :: HasName f =>
+  Char -> String -> String -> Mod f a
+switchMods s l h =
+  short s <> long l <> help h
+
+optionMods :: (HasMetavar f, HasName f) =>
+  Char -> String -> String -> String -> Mod f a
+optionMods s l meta h =
+  short s <> long l <> metavar meta <> help h
+
+optionalMods :: (HasMetavar f, HasName f, HasValue f) =>
+  Char -> String -> String -> String -> a -> Mod f a
+optionalMods s l meta h d =
+  short s <> long l <> metavar meta <> help h <> value d
