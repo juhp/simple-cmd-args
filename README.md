@@ -8,7 +8,7 @@
 
 A thin layer over optparse-applicative that avoids type plumbing for
 the common use case of a commandline tool with subcommands,
-by using `Parser (IO ())`
+by using `Parser (IO ())`.
 
 ## Usage
 
@@ -25,5 +25,4 @@ main =
     ]
 ```
 
-See more [https://github.com/juhp/simple-cmd-args/tree/master/examples](examples/).
-
+See more [examples](https://github.com/juhp/simple-cmd-args/tree/master/examples).
