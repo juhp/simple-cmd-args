@@ -1,5 +1,6 @@
 module SimpleCmdArgs
   (simpleCmdArgs,
+   simpleCmdArgs',
    strArg,
    Subcommand(..),
    subcommands
@@ -15,8 +16,24 @@ import Data.Semigroup ((<>))
 import Data.Version
 import Options.Applicative
 
--- | Parser executor for tool with subcommands
-simpleCmdArgs
+-- | Parser executor (allows interspersed args and options)
+simpleCmdArgs ::
+  Maybe Version
+  -- ^ version string
+  -> String
+  -- ^ header
+  -> String
+  -- ^ program description
+  -> Parser (IO ())
+  -- ^ commands
+  -> IO ()
+simpleCmdArgs mversion h pd =
+  simpleCmdArgsWithMods mods mversion
+  where
+    mods = fullDesc <> header h <> progDesc pd
+
+-- | Parser executor without interspersing options and args
+simpleCmdArgs'
   :: Maybe Version
   -- ^ version string
   -> String
@@ -26,14 +43,26 @@ simpleCmdArgs
   -> Parser (IO ())
   -- ^ commands
   -> IO ()
-simpleCmdArgs mversion h pd cmdsParser = join $
+simpleCmdArgs' mversion h pd =
+  simpleCmdArgsWithMods mods mversion
+  where
+    mods = fullDesc <> header h <> progDesc pd <> noIntersperse
+
+-- | Generic parser executor with explicit info modifiers
+simpleCmdArgsWithMods ::
+  InfoMod (IO ()) ->
+  -- ^ modifiers
+  Maybe Version
+  -- ^ version string
+  -> Parser (IO ())
+  -- ^ commands
+  -> IO ()
+simpleCmdArgsWithMods mods mversion cmdsParser = join $
   customExecParser (prefs showHelpOnEmpty)
   (case mversion of
-    (Just version) -> info (helper <*> versionOption version <*> cmdsParser) desc
-    Nothing -> info (helper <*> cmdsParser) desc)
+    (Just version) -> info (helper <*> versionOption version <*> cmdsParser) mods
+    Nothing -> info (helper <*> cmdsParser) mods)
   where 
-    desc = fullDesc <> header h <> progDesc pd
-
     versionOption ver =
       infoOption (showVersion ver) (long "version" <> help "Show version")
 
