@@ -10,10 +10,6 @@ A thin layer over optparse-applicative that avoids type plumbing for
 the common use case of a commandline tool with subcommands,
 by using `Parser (IO ())`
 
-## Example
-
-See [https://github.com/juhp/simple-cmd-args/tree/master/examples](examples/)
-
 ## Usage
 
 ```haskell
@@ -28,3 +24,6 @@ main =
     , Subcommand "ls" (cmd_ "ls" <$> some (strArg "FILE...")) "Touch FILE"
     ]
 ```
+
+See more [https://github.com/juhp/simple-cmd-args/tree/master/examples](examples/).
+
