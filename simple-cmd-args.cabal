@@ -3,7 +3,7 @@ name:                simple-cmd-args
 version:             0.1.0
 synopsis:            Simple command args parsing and execution
 description:
-            This a small wrapper over optparse-applicative which
+            This is a small wrapper over optparse-applicative which
             allows combining args parsers directly with IO commands,
             avoiding command types boilerplate. It also provides
             a few option Mod functions.
