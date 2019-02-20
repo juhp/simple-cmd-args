@@ -1,0 +1,6 @@
+Install the library before building the examples:
+
+      $ cd ..
+      $ cabal install
+      $ cd examples
+      $ make

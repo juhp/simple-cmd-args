@@ -8,9 +8,9 @@ import Options.Applicative (some)
 main =
   simpleCmdArgs (Just ver) "An example cli tool" "Longer description..." $
   subcommands
-  [ Subcommand "hello" (pure (putStrLn "hello")) "Print hello"
-  , Subcommand "list" (ls <$> strArg "DIR") "List DIR"
-  , Subcommand "touch" (cmd_ "touch" <$> some (strArg "FILE")) "Touch FILE"
+  [ Subcommand "hello" "Print hello" $ pure (putStrLn "hello")
+  , Subcommand "list" "List DIR" $ ls <$> strArg "DIR"
+  , Subcommand "touch" "Touch FILE" $ cmd_ "touch" <$> some (strArg "FILE")
   ]
   where
     ver = makeVersion [0,1]

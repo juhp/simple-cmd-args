@@ -37,12 +37,12 @@ simpleCmdArgs mversion h pd cmdsParser = join $
     versionOption ver =
       infoOption (showVersion ver) (long "version" <> help "Show version")
 
-data Subcommand = Subcommand String (Parser (IO ())) String
+data Subcommand = Subcommand String String (Parser (IO ()))
 
 subcommands :: [Subcommand] -> Parser (IO ())
 subcommands = subparser . mconcat . map cmdToParse
   where
-    cmdToParse (Subcommand name cmdparse cmddesc) = 
+    cmdToParse (Subcommand name cmddesc cmdparse) =
       command name (info cmdparse (progDesc cmddesc))
 
 strArg :: String -> Parser String
