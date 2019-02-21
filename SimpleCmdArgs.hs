@@ -1,12 +1,20 @@
+{-|
+This library provides a thin layer on optparse-applicative
+argument and option parsing, using @Parser (IO ())@,
+applying commands directly to their argument parsing.
+
+A few option Mod functions are also provided.
+-}
+
 module SimpleCmdArgs
-  (optionMods,
-   optionalMods,
-   simpleCmdArgs,
+  (simpleCmdArgs,
    simpleCmdArgs',
-   strArg,
    Subcommand(..),
    subcommands,
-   switchMods
+   strArg,
+   switchMods,
+   optionMods,
+   optionalMods,
   )
 where
 
@@ -20,6 +28,8 @@ import Data.Version
 import Options.Applicative
 
 -- | Parser executor (allows interspersed args and options)
+--
+-- > simpleCmdArgs (Just version) "summary" "program description" $ myCommand <$> myOptParser <*> myargsParser
 simpleCmdArgs ::
   Maybe Version
   -- ^ version string
@@ -36,6 +46,8 @@ simpleCmdArgs mversion h pd =
     mods = fullDesc <> header h <> progDesc pd
 
 -- | Parser executor without interspersing options and args
+--
+-- > simpleCmdArgs' Nothing "summary" "program description" $ myCommand <$> myOptParser <*> myargsParser
 simpleCmdArgs'
   :: Maybe Version
   -- ^ version string
@@ -53,12 +65,9 @@ simpleCmdArgs' mversion h pd =
 
 -- | Generic parser executor with explicit info modifiers
 simpleCmdArgsWithMods ::
-  InfoMod (IO ()) ->
-  -- ^ modifiers
-  Maybe Version
-  -- ^ version string
-  -> Parser (IO ())
-  -- ^ commands
+  InfoMod (IO ()) -- ^ modifiers
+  -> Maybe Version -- ^ version string
+  -> Parser (IO ()) -- ^ commands
   -> IO ()
 simpleCmdArgsWithMods mods mversion cmdsParser = join $
   customExecParser (prefs showHelpOnEmpty)
@@ -69,27 +78,40 @@ simpleCmdArgsWithMods mods mversion cmdsParser = join $
     versionOption ver =
       infoOption (showVersion ver) (long "version" <> help "Show version")
 
-data Subcommand = Subcommand String String (Parser (IO ()))
+-- | > Subcommand "command" "help description text" $ myCommand <$> optParser
+data Subcommand =
+  Subcommand String String (Parser (IO ()))
 
+-- | list of @Subcommand@ that can be run by @simpleCmdArgs@
 subcommands :: [Subcommand] -> Parser (IO ())
 subcommands = subparser . mconcat . map cmdToParse
   where
     cmdToParse (Subcommand name cmddesc cmdparse) =
       command name (info cmdparse (progDesc cmddesc))
 
+-- | A string arg parser with a METAVAR for help
 strArg :: String -> Parser String
 strArg var = strArgument (metavar var)
 
+-- | @Mod@s for a switch.
+--
+-- > switchMods 'o' "option" "help description"
 switchMods :: HasName f =>
   Char -> String -> String -> Mod f a
 switchMods s l h =
   short s <> long l <> help h
 
+-- | @Mod@s for a mandatory option.
+--
+-- > optionMods 'o' "option" "METAVAR" "help description"
 optionMods :: (HasMetavar f, HasName f) =>
   Char -> String -> String -> String -> Mod f a
 optionMods s l meta h =
   short s <> long l <> metavar meta <> help h
 
+-- | @Mod@s for an optional option: includes a default value.
+--
+-- > optionalMods 'o' "option" "METAVAR" "help description" default
 optionalMods :: (HasMetavar f, HasName f, HasValue f) =>
   Char -> String -> String -> String -> a -> Mod f a
 optionalMods s l meta h d =
