@@ -7,8 +7,7 @@
 [![Build status](https://secure.travis-ci.org/juhp/simple-cmd-args.svg)](https://travis-ci.org/juhp/simple-cmd-args)
 
 A thin layer over optparse-applicative that avoids type plumbing for
-the common use case of a commandline tool with subcommands,
-by using `Parser (IO ())`.
+commands by using `Parser (IO ())`. It also supports with subcommands.
 
 ## Usage
 
