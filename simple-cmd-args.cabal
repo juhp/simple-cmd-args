@@ -4,9 +4,9 @@ version:             0.1.0.1
 synopsis:            Simple command args parsing and execution
 description:
             This is a small wrapper over optparse-applicative which
-            allows combining args parsers directly with IO commands,
-            avoiding command type boilerplate. It supports subcommands
-            and also provides a few option Mod functions.
+            allows combining args parsers directly with IO commands.
+            For subcommands this can avoid type boilerplate.
+            It also provides a few option Mod functions.
 homepage:            https://github.com/juhp/simple-cmd-args
 bug-reports:         https://github.com/juhp/simple-cmd-args/issues
 license:             BSD3
