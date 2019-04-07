@@ -12,8 +12,12 @@ module SimpleCmdArgs
    Subcommand(..),
    subcommands,
    strArg,
+   switchWith,
    switchMods,
+   strOptionWith,
+   optionWith,
    optionMods,
+   optionalWith,
    optionalMods,
   )
 where
@@ -93,6 +97,13 @@ subcommands = subparser . mconcat . map cmdToParse
 strArg :: String -> Parser String
 strArg var = strArgument (metavar var)
 
+-- | switch with Mods
+--
+-- > switchWith 'o' "option" "help description"
+switchWith :: Char -> String -> String -> Parser Bool
+switchWith s l h =
+  switch (switchMods s l h)
+
 -- | @Mod@s for a switch.
 --
 -- > switchMods 'o' "option" "help description"
@@ -101,6 +112,20 @@ switchMods :: HasName f =>
 switchMods s l h =
   short s <> long l <> help h
 
+-- | strOption with Mods
+--
+-- > strOptionWith 'o' "option" "METAVAR" "help description"
+strOptionWith :: Char -> String -> String -> String -> Parser String
+strOptionWith s l meta h =
+  strOption (optionMods s l meta h)
+
+-- | option with Mods
+--
+-- > optionWith 'o' "option" "METAVAR" "help description"
+optionWith :: ReadM a -> Char -> String -> String -> String -> Parser a
+optionWith r s l meta h =
+  option r (optionMods s l meta h)
+
 -- | @Mod@s for a mandatory option.
 --
 -- > optionMods 'o' "option" "METAVAR" "help description"
@@ -108,6 +133,13 @@ optionMods :: (HasMetavar f, HasName f) =>
   Char -> String -> String -> String -> Mod f a
 optionMods s l meta h =
   short s <> long l <> metavar meta <> help h
+
+-- | optional option with Mods, includes a default value.
+--
+-- > optionalWith 'o' "option" "METAVAR" "help description" default
+optionalWith :: ReadM a -> Char -> String -> String -> String -> a -> Parser a
+optionalWith r s l meta h d =
+  option r (optionalMods s l meta h d)
 
 -- | @Mod@s for an optional option: includes a default value.
 --
