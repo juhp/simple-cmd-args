@@ -17,8 +17,10 @@ module SimpleCmdArgs
    strOptionWith,
    optionWith,
    optionMods,
+   strOptionalWith,
    optionalWith,
    optionalMods,
+   argumentWith
   )
 where
 
@@ -134,6 +136,13 @@ optionMods :: (HasMetavar f, HasName f) =>
 optionMods s l meta h =
   short s <> long l <> metavar meta <> help h
 
+-- | strOptional with Mods
+--
+-- > strOptionalWith 'o' "option" "METAVAR" "help description" default
+strOptionalWith :: Char -> String -> String -> String -> String -> Parser String
+strOptionalWith s l meta h d =
+  strOption (optionalMods s l meta h d)
+
 -- | optional option with Mods, includes a default value.
 --
 -- > optionalWith 'o' "option" "METAVAR" "help description" default
@@ -148,3 +157,10 @@ optionalMods :: (HasMetavar f, HasName f, HasValue f) =>
   Char -> String -> String -> String -> a -> Mod f a
 optionalMods s l meta h d =
   short s <> long l <> metavar meta <> help h <> value d
+
+-- | argument with METAVAR
+--
+-- > argumentWith auto "METAVAR"
+argumentWith :: ReadM a -> String -> Parser a
+argumentWith r meta =
+  argument r (metavar meta)
