@@ -1,3 +1,8 @@
+/examples/example
+/examples/opts
+/examples/readme
+/examples/subcmds
+
 ### Haskell
 dist
 dist-*
