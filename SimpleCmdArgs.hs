@@ -9,6 +9,7 @@ A few option Mod functions are also provided.
 module SimpleCmdArgs
   (simpleCmdArgs,
    simpleCmdArgs',
+   simpleCmdArgsWithMods,
    Subcommand(..),
    subcommands,
    strArg,
@@ -47,7 +48,7 @@ simpleCmdArgs ::
   -- ^ commands
   -> IO ()
 simpleCmdArgs mversion h pd =
-  simpleCmdArgsWithMods mods mversion
+  simpleCmdArgsWithMods mversion mods
   where
     mods = fullDesc <> header h <> progDesc pd
 
@@ -65,17 +66,17 @@ simpleCmdArgs'
   -- ^ commands
   -> IO ()
 simpleCmdArgs' mversion h pd =
-  simpleCmdArgsWithMods mods mversion
+  simpleCmdArgsWithMods mversion mods
   where
     mods = fullDesc <> header h <> progDesc pd <> noIntersperse
 
 -- | Generic parser executor with explicit info modifiers
 simpleCmdArgsWithMods ::
-  InfoMod (IO ()) -- ^ modifiers
-  -> Maybe Version -- ^ version string
+  Maybe Version -- ^ version string
+  -> InfoMod (IO ()) -- ^ modifiers
   -> Parser (IO ()) -- ^ commands
   -> IO ()
-simpleCmdArgsWithMods mods mversion cmdsParser = join $
+simpleCmdArgsWithMods mversion mods cmdsParser = join $
   customExecParser (prefs showHelpOnEmpty)
   (case mversion of
     (Just version) -> info (helper <*> versionOption version <*> cmdsParser) mods
