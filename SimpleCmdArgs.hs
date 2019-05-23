@@ -21,7 +21,10 @@ module SimpleCmdArgs
    strOptionalWith,
    optionalWith,
    optionalMods,
-   argumentWith
+   argumentWith,
+   Parser,
+   auto,
+   optional
   )
 where
 
