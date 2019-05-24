@@ -14,6 +14,8 @@ module SimpleCmdArgs
    subcommands,
    strArg,
    switchWith,
+   flagWith,
+   flagWith',
    switchMods,
    strOptionWith,
    optionWith,
@@ -113,6 +115,24 @@ strArg var = strArgument (metavar var)
 switchWith :: Char -> String -> String -> Parser Bool
 switchWith s l h =
   switch (switchMods s l h)
+
+-- | flag with Mods
+--
+-- > flagWith offVal onVal 'f' "flag" "help description"
+--
+-- @since 0.1.2
+flagWith :: a -> a -> Char -> String -> String -> Parser a
+flagWith off on s l h =
+  flag off on (switchMods s l h)
+
+-- | flag' with Mods
+--
+-- > flagWith' val 'f' "flag" "help description"
+--
+-- @since 0.1.2
+flagWith' :: a -> Char -> String -> String -> Parser a
+flagWith' val s l h =
+  flag' val (switchMods s l h)
 
 -- | @Mod@s for a switch.
 --
