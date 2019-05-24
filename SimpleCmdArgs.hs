@@ -74,6 +74,8 @@ simpleCmdArgs' mversion h pd =
     mods = fullDesc <> header h <> progDesc pd <> noIntersperse
 
 -- | Generic parser executor with explicit info modifiers
+--
+-- @since 0.1.1
 simpleCmdArgsWithMods ::
   Maybe Version -- ^ version string
   -> InfoMod (IO ()) -- ^ modifiers
@@ -106,6 +108,8 @@ strArg var = strArgument (metavar var)
 -- | switch with Mods
 --
 -- > switchWith 'o' "option" "help description"
+--
+-- @since 0.1.1
 switchWith :: Char -> String -> String -> Parser Bool
 switchWith s l h =
   switch (switchMods s l h)
@@ -121,13 +125,17 @@ switchMods s l h =
 -- | strOption with Mods
 --
 -- > strOptionWith 'o' "option" "METAVAR" "help description"
+--
+-- @since 0.1.1
 strOptionWith :: Char -> String -> String -> String -> Parser String
 strOptionWith s l meta h =
   strOption (optionMods s l meta h)
 
 -- | option with Mods
 --
--- > optionWith 'o' "option" "METAVAR" "help description"
+-- > optionWith auto 'o' "option" "METAVAR" "help description"
+--
+-- @since 0.1.1
 optionWith :: ReadM a -> Char -> String -> String -> String -> Parser a
 optionWith r s l meta h =
   option r (optionMods s l meta h)
@@ -143,13 +151,17 @@ optionMods s l meta h =
 -- | strOptional with Mods
 --
 -- > strOptionalWith 'o' "option" "METAVAR" "help description" default
+--
+-- @since 0.1.1
 strOptionalWith :: Char -> String -> String -> String -> String -> Parser String
 strOptionalWith s l meta h d =
   strOption (optionalMods s l meta h d)
 
 -- | optional option with Mods, includes a default value.
 --
--- > optionalWith 'o' "option" "METAVAR" "help description" default
+-- > optionalWith auto 'o' "option" "METAVAR" "help description" default
+--
+-- @since 0.1.1
 optionalWith :: ReadM a -> Char -> String -> String -> String -> a -> Parser a
 optionalWith r s l meta h d =
   option r (optionalMods s l meta h d)
@@ -165,6 +177,8 @@ optionalMods s l meta h d =
 -- | argument with METAVAR
 --
 -- > argumentWith auto "METAVAR"
+--
+-- @since 0.1.1
 argumentWith :: ReadM a -> String -> Parser a
 argumentWith r meta =
   argument r (metavar meta)
