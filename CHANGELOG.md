@@ -1,6 +1,10 @@
 # Changelog
 
-`simple-cmd-args` uses [PVP Versioning][1].
+`simple-cmd-args` uses [PVP Versioning](https://pvp.haskell.org).
+
+## 0.1.2
+- add flagWith and flagWith'
+- export Parser, auto, optional
 
 ## 0.1.1
 - add switchWith, strOptionWith, optionWith, optionalWith,
@@ -12,5 +16,3 @@
 
 ## 0.1.0
 - Initial release with subcommands and option Mod functions
-
-[1]: https://pvp.haskell.org

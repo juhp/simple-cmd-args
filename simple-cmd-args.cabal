@@ -6,7 +6,7 @@ description:
             This is a small wrapper over optparse-applicative which
             allows combining args parsers directly with IO commands.
             For subcommands this can avoid type boilerplate.
-            It also provides a few functions for common Mod combinations.
+            It also provides some compact aliases for options with their Mod's.
 homepage:            https://github.com/juhp/simple-cmd-args
 bug-reports:         https://github.com/juhp/simple-cmd-args/issues
 license:             BSD3
