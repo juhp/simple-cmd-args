@@ -1,9 +1,9 @@
 import SimpleCmd (cmd_)
 import SimpleCmdArgs
 
+import Control.Applicative (some)
 import Data.Version (makeVersion)
 import System.Directory (listDirectory)
-import Options.Applicative (some)
 
 main =
   simpleCmdArgs (Just ver) "An example cli tool" "Longer description..." $
