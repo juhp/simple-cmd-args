@@ -1,5 +1,4 @@
 import Data.List (sort)
-import Data.Semigroup ((<>))
 import SimpleCmdArgs
 import System.Directory
 
