@@ -26,10 +26,12 @@ module SimpleCmdArgs
    argumentWith,
    Parser,
    auto,
-   optional
+   optional,
+   (<|>)
   )
 where
 
+import Control.Applicative ((<|>))
 import Control.Monad (join)
 #if (defined(MIN_VERSION_base) && MIN_VERSION_base(4,8,0))
 #else
