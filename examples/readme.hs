@@ -7,6 +7,6 @@ main =
   subcommands
     [ Subcommand "echo" "Print name" $
       putStrLn <$> strArg "NAME"
-    , Subcommand "ls" "Touch FILE" $
+    , Subcommand "ls" "List files" $
       cmd_ "ls" <$> some (strArg "FILE...")
     ]

@@ -10,7 +10,7 @@ main =
   subcommands
   [ Subcommand "hello" "Print hello" $ pure (putStrLn "hello")
   , Subcommand "list" "List DIR" $ ls <$> strArg "DIR"
-  , Subcommand "touch" "Touch FILE" $ cmd_ "touch" <$> some (strArg "FILE")
+  , Subcommand "touch" "Touch files" $ cmd_ "touch" <$> some (strArg "FILE...")
   ]
   where
     ver = makeVersion [0,1]
