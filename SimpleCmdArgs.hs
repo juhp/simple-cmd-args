@@ -27,11 +27,20 @@ module SimpleCmdArgs
    Parser,
    auto,
    optional,
-   (<|>)
+   (<|>),
+#if (defined(MIN_VERSION_base) && MIN_VERSION_base(4,8,0))
+#else
+   (<$>), (<*>)
+#endif
   )
 where
 
-import Control.Applicative ((<|>))
+import Control.Applicative ((<|>),
+#if (defined(MIN_VERSION_base) && MIN_VERSION_base(4,8,0))
+#else
+                            (<$>), (<*>)
+#endif
+                           )
 import Control.Monad (join)
 #if (defined(MIN_VERSION_base) && MIN_VERSION_base(4,8,0))
 #else
