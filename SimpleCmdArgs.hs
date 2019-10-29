@@ -26,7 +26,10 @@ module SimpleCmdArgs
    argumentWith,
    Parser,
    auto,
+   many,
    optional,
+   some,
+   str,
    (<|>),
 #if (defined(MIN_VERSION_base) && MIN_VERSION_base(4,8,0))
 #else
