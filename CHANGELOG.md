@@ -2,6 +2,10 @@
 
 `simple-cmd-args` uses [PVP Versioning](https://pvp.haskell.org).
 
+## 0.1.4 (2019-10-29)
+- export many, some, str
+- export <$> and <*> on older ghc7
+
 ## 0.1.3 (2019-09-12)
 - export <|>
 
