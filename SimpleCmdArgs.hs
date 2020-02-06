@@ -110,10 +110,14 @@ simpleCmdArgsWithMods mversion mods cmdsParser = join $
 data Subcommand =
   Subcommand String String (Parser (IO ()))
 
+-- | equality on the command string
+--
 -- @since 0.1.5
 instance Eq Subcommand where
   (Subcommand n1 _ _) == (Subcommand n2 _ _) = n1 == n2
 
+-- | comparison on the command string
+--
 -- @since 0.1.5
 instance Ord Subcommand where
   compare (Subcommand n1 _ _) (Subcommand n2 _ _) = compare n1 n2
