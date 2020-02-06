@@ -2,6 +2,9 @@
 
 `simple-cmd-args` uses [PVP Versioning](https://pvp.haskell.org).
 
+## 0.1.5 (2020-02-06)
+- add Eq and Ord instances for Subcommand
+
 ## 0.1.4 (2019-10-29)
 - export many, some, str
 - export <$> and <*> on older ghc7

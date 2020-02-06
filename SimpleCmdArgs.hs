@@ -102,13 +102,21 @@ simpleCmdArgsWithMods mversion mods cmdsParser = join $
   (case mversion of
     (Just version) -> info (helper <*> versionOption version <*> cmdsParser) mods
     Nothing -> info (helper <*> cmdsParser) mods)
-  where 
+  where
     versionOption ver =
       infoOption (showVersion ver) (long "version" <> help "Show version")
 
 -- | > Subcommand "command" "help description text" $ myCommand <$> optParser
 data Subcommand =
   Subcommand String String (Parser (IO ()))
+
+-- @since 0.1.5
+instance Eq Subcommand where
+  (Subcommand n1 _ _) == (Subcommand n2 _ _) = n1 == n2
+
+-- @since 0.1.5
+instance Ord Subcommand where
+  compare (Subcommand n1 _ _) (Subcommand n2 _ _) = compare n1 n2
 
 -- | list of @Subcommand@ that can be run by @simpleCmdArgs@
 subcommands :: [Subcommand] -> Parser (IO ())
