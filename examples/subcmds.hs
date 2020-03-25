@@ -6,7 +6,7 @@ import Data.Version (makeVersion)
 import System.Directory (listDirectory)
 
 main =
-  simpleCmdArgs (Just ver) "An example cli tool" "Longer description..." $
+  simpleCmdArgs (Just ver) "example-cli" "An example of subcommands..." $
   subcommands
   [ Subcommand "hello" "Print hello" $ pure (putStrLn "hello")
   , Subcommand "list" "List DIR" $ ls <$> strArg "DIR"

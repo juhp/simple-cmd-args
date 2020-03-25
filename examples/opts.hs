@@ -3,8 +3,8 @@ import SimpleCmdArgs
 import System.Directory
 
 main =
-  simpleCmdArgs Nothing "An example cli tool" "Description..." $
-  ls <$> switchWith 'a' "all" "include hidden files" <*> strArg "FILE..."
+  simpleCmdArgs Nothing "lsdir" "Lists filepath..." $
+  ls <$> switchWith 'a' "all" "include hidden files" <*> strArg "FILEPATH"
 
 ls :: Bool -> FilePath -> IO ()
 ls hidden fp = sort <$>

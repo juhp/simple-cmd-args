@@ -2,6 +2,7 @@
 /examples/opts
 /examples/readme
 /examples/subcmds
+/examples/subcmds2
 
 ### Haskell
 dist

@@ -1,2 +1,4 @@
 - shared monoidal wrappers for short <> long <> ...
 - add default to the help for strOptionalWith and optionalWith
+- add testsuite
+- add examples to .cabal
