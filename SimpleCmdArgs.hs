@@ -121,13 +121,13 @@ data Subcommand =
 subCmdName :: Subcommand -> String
 subCmdName (Subcommand n _ _) = n
 
--- | equality on the command string
+-- | equality by command name
 --
 -- @since 0.1.5
 instance Eq Subcommand where
   c1 == c2 = subCmdName c1 == subCmdName c2
 
--- | comparison on the command string
+-- | comparison by command name
 --
 -- @since 0.1.5
 instance Ord Subcommand where
