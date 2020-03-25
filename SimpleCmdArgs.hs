@@ -133,7 +133,7 @@ instance Eq Subcommand where
 instance Ord Subcommand where
   compare c1 c2 = compare (subCmdName c1) (subCmdName c2)
 
--- | list of @Subcommand@ that can be run by @simpleCmdArgs@
+-- | Create a list of @Subcommand@ that can be run by @simpleCmdArgs@
 subcommands :: [Subcommand] -> Parser (IO ())
 subcommands = hsubparser . mconcat . map cmdToParse . warnIfDuplicates
   where
