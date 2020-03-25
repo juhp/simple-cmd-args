@@ -3,7 +3,7 @@ import Control.Applicative (some)
 import System.Directory
 
 main =
-  simpleCmdArgs Nothing "example-tool" "Longer description..." $
+  simpleCmdArgs Nothing "readme example" "Longer description..." $
   subcommands
     [ Subcommand "echo" "Print words" $
       putStrLn . unwords <$> some (strArg "STR...")

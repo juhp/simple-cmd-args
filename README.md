@@ -11,13 +11,14 @@ subcommands by using `Parser (IO ())`.
 
 ## Usage
 
-```haskell
+```console
+$ cat readme.hs
 import SimpleCmdArgs
 import Control.Applicative (some)
 import System.Directory
 
 main =
-  simpleCmdArgs Nothing "example-tool" "Longer description..." $
+  simpleCmdArgs Nothing "readme example" "Longer description..." $
   subcommands
     [ Subcommand "echo" "Print words" $
       putStrLn . unwords <$> some (strArg "STR...")
@@ -36,6 +37,23 @@ ls dir =
 mkdir :: Bool -> FilePath -> IO ()
 mkdir parents =
   if parents then createDirectoryIfMissing True else createDirectory
+$ ghc readme.hs
+./readme --help
+readme example
+
+Usage: readme COMMAND
+  Longer description...
+
+Available options:
+  -h,--help                Show this help text
+
+Available commands:
+  echo                     Print words
+  ls                       List directory
+  mkdir                    Create directory
+$ ./readme echo hello world
+hello world
 ```
+
 
 See more [examples](https://github.com/juhp/simple-cmd-args/tree/master/examples).
