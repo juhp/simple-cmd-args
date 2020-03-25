@@ -144,9 +144,7 @@ subcommands = hsubparser . mconcat . map cmdToParse . warnIfDuplicates
     warnIfDuplicates subcmds =
       if dups then trace "duplicate subcommand found" subcmds else subcmds
       where
-        dups =
-          let cmds = map subCmdName subcmds
-          in nub cmds == cmds
+        dups = nub subcmds /= subcmds
 
 -- | A string arg parser with a METAVAR for help
 strArg :: String -> Parser String
