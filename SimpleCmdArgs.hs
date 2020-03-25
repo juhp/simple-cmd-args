@@ -38,19 +38,25 @@ module SimpleCmdArgs
   )
 where
 
+#if (defined(MIN_VERSION_base) && MIN_VERSION_base(4,13,0))
+#else
 import Control.Applicative ((<|>),
 #if (defined(MIN_VERSION_base) && MIN_VERSION_base(4,8,0))
 #else
                             (<$>), (<*>)
 #endif
                            )
+#endif
 import Control.Monad (join)
 import Data.List (nub)
 #if (defined(MIN_VERSION_base) && MIN_VERSION_base(4,8,0))
 #else
 import Data.Monoid (mconcat)
 #endif
+#if (defined(MIN_VERSION_base) && MIN_VERSION_base(4,13,0))
+#else
 import Data.Semigroup ((<>))
+#endif
 import Data.Version
 import Debug.Trace (trace)
 import Options.Applicative
