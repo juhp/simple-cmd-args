@@ -124,7 +124,7 @@ instance Ord Subcommand where
 
 -- | list of @Subcommand@ that can be run by @simpleCmdArgs@
 subcommands :: [Subcommand] -> Parser (IO ())
-subcommands = subparser . mconcat . map cmdToParse
+subcommands = hsubparser . mconcat . map cmdToParse
   where
     cmdToParse (Subcommand name cmddesc cmdparse) =
       command name (info cmdparse (progDesc cmddesc))

@@ -1,3 +1,2 @@
-- fix --help for subcommands
 - add default to the help for strOptionalWith and optionalWith
 - warn about duplicate subcommands
