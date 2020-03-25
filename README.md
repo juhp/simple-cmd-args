@@ -13,6 +13,8 @@ subcommands by using `Parser (IO ())`.
 
 ```console
 $ cat readme.hs
+```
+```haskell
 import SimpleCmdArgs
 import Control.Applicative (some)
 import System.Directory
@@ -37,6 +39,8 @@ ls dir =
 mkdir :: Bool -> FilePath -> IO ()
 mkdir parents =
   if parents then createDirectoryIfMissing True else createDirectory
+```
+```console
 $ ghc readme.hs
 $ ./readme --help
 readme example
@@ -54,6 +58,5 @@ Available commands:
 $ ./readme echo hello world
 hello world
 ```
-
 
 See more [examples](https://github.com/juhp/simple-cmd-args/tree/master/examples).
