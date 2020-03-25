@@ -10,8 +10,10 @@ module SimpleCmdArgs
   (simpleCmdArgs,
    simpleCmdArgs',
    simpleCmdArgsWithMods,
+   -- * Subcommands
    Subcommand(..),
    subcommands,
+   -- * Option and arg helpers
    strArg,
    switchWith,
    flagWith,
@@ -24,6 +26,7 @@ module SimpleCmdArgs
    optionalWith,
    optionalMods,
    argumentWith,
+   -- * Re-exports from optparse-applicative
    Parser,
    auto,
    many,
