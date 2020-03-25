@@ -208,17 +208,19 @@ strOptionalWith s l meta h d =
 -- > optionalWith auto 'o' "option" "METAVAR" "help description" default
 --
 -- @since 0.1.1
-optionalWith :: ReadM a -> Char -> String -> String -> String -> a -> Parser a
+optionalWith :: Show a => ReadM a -> Char -> String -> String -> String -> a -> Parser a
 optionalWith r s l meta h d =
   option r (optionalMods s l meta h d)
 
 -- | @Mod@s for an optional option: includes a default value.
 --
 -- > optionalMods 'o' "option" "METAVAR" "help description" default
-optionalMods :: (HasMetavar f, HasName f, HasValue f) =>
+optionalMods :: (HasMetavar f, HasName f, HasValue f, Show a) =>
   Char -> String -> String -> String -> a -> Mod f a
 optionalMods s l meta h d =
-  short s <> long l <> metavar meta <> help h <> value d
+  short s <> long l <> metavar meta <> helpDefault <> value d
+  where
+    helpDefault = help $ h ++ "[" ++ show d ++ "]"
 
 -- | argument with METAVAR
 --
