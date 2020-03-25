@@ -38,7 +38,7 @@ mkdir :: Bool -> FilePath -> IO ()
 mkdir parents =
   if parents then createDirectoryIfMissing True else createDirectory
 $ ghc readme.hs
-./readme --help
+$ ./readme --help
 readme example
 
 Usage: readme COMMAND
