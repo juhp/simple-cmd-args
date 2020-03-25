@@ -45,12 +45,14 @@ import Control.Applicative ((<|>),
 #endif
                            )
 import Control.Monad (join)
+import Data.List (nub)
 #if (defined(MIN_VERSION_base) && MIN_VERSION_base(4,8,0))
 #else
 import Data.Monoid (mconcat)
 #endif
 import Data.Semigroup ((<>))
 import Data.Version
+import Debug.Trace (trace)
 import Options.Applicative
 
 -- | Parser executor (allows interspersed args and options)
@@ -110,24 +112,35 @@ simpleCmdArgsWithMods mversion mods cmdsParser = join $
 data Subcommand =
   Subcommand String String (Parser (IO ()))
 
+subCmdName :: Subcommand -> String
+subCmdName (Subcommand n _ _) = n
+
 -- | equality on the command string
 --
 -- @since 0.1.5
 instance Eq Subcommand where
-  (Subcommand n1 _ _) == (Subcommand n2 _ _) = n1 == n2
+  c1 == c2 = subCmdName c1 == subCmdName c2
 
 -- | comparison on the command string
 --
 -- @since 0.1.5
 instance Ord Subcommand where
-  compare (Subcommand n1 _ _) (Subcommand n2 _ _) = compare n1 n2
+  compare c1 c2 = compare (subCmdName c1) (subCmdName c2)
 
 -- | list of @Subcommand@ that can be run by @simpleCmdArgs@
 subcommands :: [Subcommand] -> Parser (IO ())
-subcommands = hsubparser . mconcat . map cmdToParse
+subcommands = hsubparser . mconcat . map cmdToParse . warnIfDuplicates
   where
     cmdToParse (Subcommand name cmddesc cmdparse) =
       command name (info cmdparse (progDesc cmddesc))
+
+    warnIfDuplicates :: [Subcommand] -> [Subcommand]
+    warnIfDuplicates subcmds =
+      if dups then trace "duplicate subcommand found" subcmds else subcmds
+      where
+        dups =
+          let cmds = map subCmdName subcmds
+          in nub cmds == cmds
 
 -- | A string arg parser with a METAVAR for help
 strArg :: String -> Parser String
