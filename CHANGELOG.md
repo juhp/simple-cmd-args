@@ -2,6 +2,10 @@
 
 `simple-cmd-args` uses [PVP Versioning](https://pvp.haskell.org).
 
+## 0.1.6 (2020-03-25)
+- subcommands now have --help option
+- output a warning if there are duplicate commands
+
 ## 0.1.5 (2020-02-06)
 - add Eq and Ord instances for Subcommand
 
