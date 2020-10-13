@@ -34,30 +34,25 @@ module SimpleCmdArgs
    some,
    str,
    (<|>),
-#if (defined(MIN_VERSION_base) && MIN_VERSION_base(4,8,0))
-#else
+#if !MIN_VERSION_base(4,8,0)
    (<$>), (<*>)
 #endif
   )
 where
 
-#if (defined(MIN_VERSION_base) && MIN_VERSION_base(4,13,0))
-#else
+#if !MIN_VERSION_base(4,13,0)
 import Control.Applicative ((<|>),
-#if (defined(MIN_VERSION_base) && MIN_VERSION_base(4,8,0))
-#else
+#if !MIN_VERSION_base(4,8,0)
                             (<$>), (<*>)
 #endif
                            )
 #endif
 import Control.Monad (join)
 import Data.List (nub)
-#if (defined(MIN_VERSION_base) && MIN_VERSION_base(4,8,0))
-#else
+#if !MIN_VERSION_base(4,8,0)
 import Data.Monoid (mconcat)
 #endif
-#if (defined(MIN_VERSION_base) && MIN_VERSION_base(4,13,0))
-#else
+#if !MIN_VERSION_base(4,13,0)
 import Data.Semigroup ((<>))
 #endif
 import Data.Version
