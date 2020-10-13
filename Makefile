@@ -1,7 +1,7 @@
 stack-all:
 	stack --resolver nightly build
 	@echo
-	stack --resolver lts build
+	stack --resolver lts-16 build
 	@echo
 	stack --resolver lts-14 build
 	@echo
