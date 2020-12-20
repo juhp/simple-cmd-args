@@ -4,7 +4,7 @@
 [![BSD license](https://img.shields.io/badge/license-BSD-blue.svg)](LICENSE)
 [![Stackage Lts](http://stackage.org/package/simple-cmd-args/badge/lts)](http://stackage.org/lts/package/simple-cmd-args)
 [![Stackage Nightly](http://stackage.org/package/simple-cmd-args/badge/nightly)](http://stackage.org/nightly/package/simple-cmd-args)
-[![Build status](https://secure.travis-ci.org/juhp/simple-cmd-args.svg)](https://travis-ci.org/juhp/simple-cmd-args)
+[![Build Status](https://travis-ci.com/juhp/simple-cmd-args.svg?branch=master)](https://travis-ci.com/juhp/simple-cmd-args)
 
 A thin layer over optparse-applicative that avoids type plumbing for
 subcommands by using `Parser (IO ())`.
