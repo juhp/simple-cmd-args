@@ -30,6 +30,8 @@ module SimpleCmdArgs
    Parser,
    auto,
    many,
+   eitherReader,
+   maybeReader,
    optional,
    some,
    str,

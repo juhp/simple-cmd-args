@@ -1,6 +1,6 @@
 cabal-version:       1.18
 name:                simple-cmd-args
-version:             0.1.6
+version:             0.1.7
 synopsis:            Simple command args parsing and execution
 description:
             This is a small wrapper over optparse-applicative which

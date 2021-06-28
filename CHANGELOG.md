@@ -2,6 +2,9 @@
 
 `simple-cmd-args` uses [PVP Versioning](https://pvp.haskell.org).
 
+## 0.1.7 (2021-06-28)
+- export maybeReader and eitherReader
+
 ## 0.1.6 (2020-03-25)
 - subcommands now have --help option
 - output a warning if there are duplicate commands
