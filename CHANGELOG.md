@@ -3,7 +3,7 @@
 `simple-cmd-args` uses [PVP Versioning](https://pvp.haskell.org).
 
 ## 0.1.7 (2021-06-28)
-- export maybeReader and eitherReader
+- re-export maybeReader, eitherReader, and ReadM
 
 ## 0.1.6 (2020-03-25)
 - subcommands now have --help option
@@ -13,15 +13,15 @@
 - add Eq and Ord instances for Subcommand
 
 ## 0.1.4 (2019-10-29)
-- export many, some, str
-- export <$> and <*> on older ghc7
+- re-export many, some, str
+- re-export <$> and <*> on older ghc7
 
 ## 0.1.3 (2019-09-12)
-- export <|>
+- re-export <|>
 
 ## 0.1.2 (2019-05-24)
 - add flagWith and flagWith'
-- export Parser, auto, optional
+- re-export Parser, auto, optional
 
 ## 0.1.1 (2019-04-08)
 - add switchWith, strOptionWith, optionWith, optionalWith,

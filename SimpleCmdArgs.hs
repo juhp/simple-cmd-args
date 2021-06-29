@@ -28,6 +28,7 @@ module SimpleCmdArgs
    argumentWith,
    -- * Re-exports from optparse-applicative
    Parser,
+   ReadM,
    auto,
    many,
    eitherReader,
