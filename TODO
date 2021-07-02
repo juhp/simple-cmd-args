@@ -1,4 +1,11 @@
 - shared monoidal wrappers for short <> long <> ...
-- add default to the help for strOptionalWith and optionalWith
+  - support long only options, or list of shorts
+- add default value to the help for strOptionalWith and optionalWith
 - add testsuite
 - add examples to .cabal
+- warn about duplicate options
+
+- use progDescDoc wrapper [String] -> Doc
+
+# breaks API
+- swap flagWith and flagWith'

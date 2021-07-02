@@ -58,6 +58,7 @@ import Data.Monoid (mconcat)
 #if !MIN_VERSION_base(4,13,0)
 import Data.Semigroup ((<>))
 #endif
+import Data.String
 import Data.Version
 import Debug.Trace (trace)
 import Options.Applicative
@@ -148,7 +149,7 @@ subcommands = hsubparser . mconcat . map cmdToParse . warnIfDuplicates
         dups = nub subcmds /= subcmds
 
 -- | A string arg parser with a METAVAR for help
-strArg :: String -> Parser String
+strArg :: IsString s => String -> Parser s
 strArg var = strArgument (metavar var)
 
 -- | switch with Mods
@@ -191,7 +192,7 @@ switchMods s l h =
 -- > strOptionWith 'o' "option" "METAVAR" "help description"
 --
 -- @since 0.1.1
-strOptionWith :: Char -> String -> String -> String -> Parser String
+strOptionWith :: IsString s => Char -> String -> String -> String -> Parser s
 strOptionWith s l meta h =
   strOption (optionMods s l meta h)
 
@@ -217,9 +218,10 @@ optionMods s l meta h =
 -- > strOptionalWith 'o' "option" "METAVAR" "help description" default
 --
 -- @since 0.1.1
-strOptionalWith :: Char -> String -> String -> String -> String -> Parser String
+strOptionalWith :: (IsString s, Show s)
+                => Char -> String -> String -> String -> s -> Parser s
 strOptionalWith s l meta h d =
-  strOption (optionalMods s l meta h d)
+  strOption (optionalMods s l meta (h <> " [default: " <> show d <> "]") d)
 
 -- | optional option with Mods, includes a default value.
 --
