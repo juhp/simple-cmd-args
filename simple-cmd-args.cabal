@@ -37,4 +37,3 @@ library
   ghc-options:         -Wall -fwarn-missing-signatures
 
   default-language:    Haskell2010
-  default-extensions:  CPP

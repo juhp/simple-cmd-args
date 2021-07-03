@@ -1,3 +1,5 @@
+{-# LANGUAGE CPP #-}
+
 {-|
 This library provides a thin layer on optparse-applicative
 argument and option parsing, using @Parser (IO ())@,
