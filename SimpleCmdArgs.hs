@@ -70,7 +70,6 @@ import Data.Monoid (mconcat)
 #if !MIN_VERSION_base(4,13,0)
 import Data.Semigroup ((<>))
 #endif
-import Data.String
 import Data.Version
 import Debug.Trace (trace)
 import Options.Applicative
@@ -161,7 +160,7 @@ subcommands = hsubparser . mconcat . map cmdToParse . warnIfDuplicates
         dups = nub subcmds /= subcmds
 
 -- | A string arg parser with a METAVAR for help
-strArg :: IsString s => String -> Parser s
+strArg :: String -> Parser String
 strArg var = strArgument (metavar var)
 
 -- | switch with Mods
@@ -177,7 +176,7 @@ switchWith s l h =
 --
 -- > switchLongWith "option" "help description"
 --
--- @since 0.2
+-- @since 0.1.8
 switchLongWith :: String -> String -> Parser Bool
 switchLongWith l h =
   switch (switchLongMods l h)
@@ -204,7 +203,7 @@ flagWith' val s l h =
 --
 -- > flagLongWith offVal onVal "flag" "help description"
 --
--- @since 0.2
+-- @since 0.1.8
 flagLongWith :: a -> a -> String -> String -> Parser a
 flagLongWith off on l h =
   flag off on (switchLongMods l h)
@@ -213,7 +212,7 @@ flagLongWith off on l h =
 --
 -- > flagLongWith' val "flag" "help description"
 --
--- @since 0.2
+-- @since 0.1.8
 flagLongWith' :: a -> String -> String -> Parser a
 flagLongWith' val l h =
   flag' val (switchLongMods l h)
@@ -239,7 +238,7 @@ switchLongMods l h =
 -- > strOptionWith 'o' "option" "METAVAR" "help description"
 --
 -- @since 0.1.1
-strOptionWith :: IsString s => Char -> String -> String -> String -> Parser s
+strOptionWith :: Char -> String -> String -> String -> Parser String
 strOptionWith s l meta h =
   strOption (optionMods s l meta h)
 
@@ -247,8 +246,8 @@ strOptionWith s l meta h =
 --
 -- > strOptionLongWith "option" "METAVAR" "help description"
 --
--- @since 0.2
-strOptionLongWith :: IsString s => String -> String -> String -> Parser s
+-- @since 0.1.8
+strOptionLongWith :: String -> String -> String -> Parser String
 strOptionLongWith l meta h =
   strOption (optionLongMods l meta h)
 
@@ -265,7 +264,7 @@ optionWith r s l meta h =
 --
 -- > optionLongWith auto "option" "METAVAR" "help description"
 --
--- @since 0.2
+-- @since 0.1.8
 optionLongWith :: ReadM a -> String -> String -> String -> Parser a
 optionLongWith r l meta h =
   option r (optionLongMods l meta h)
@@ -291,10 +290,9 @@ optionLongMods l meta h =
 -- > strOptionalWith 'o' "option" "METAVAR" "help description" default
 --
 -- @since 0.1.1
-strOptionalWith :: (IsString s, Show s)
-                => Char -> String -> String -> String -> s -> Parser s
+strOptionalWith :: Char -> String -> String -> String -> String -> Parser String
 strOptionalWith s l meta h d =
-  strOption (optionalMods s l meta (h <> " [default: " <> show d <> "]") d)
+  strOption (optionalMods s l meta h d)
 
 -- | optional option with Mods, includes a default value.
 --
@@ -309,9 +307,8 @@ optionalWith r s l meta h d =
 --
 -- > strOptionalLongWith "option" "METAVAR" "help description" default
 --
--- @since 0.2
-strOptionalLongWith :: (IsString s, Show s)
-                => String -> String -> String -> s -> Parser s
+-- @since 0.1.8
+strOptionalLongWith :: String -> String -> String -> String -> Parser String
 strOptionalLongWith l meta h d =
   strOption (optionalLongMods l meta (h <> " [default: " <> show d <> "]") d)
 
@@ -319,7 +316,7 @@ strOptionalLongWith l meta h d =
 --
 -- > optionalLongWith auto "option" "METAVAR" "help description" default
 --
--- @since 0.2
+-- @since 0.1.8
 optionalLongWith :: ReadM a -> String -> String -> String -> a -> Parser a
 optionalLongWith r l meta h d =
   option r (optionalLongMods l meta h d)
@@ -336,7 +333,7 @@ optionalMods s l meta h d =
 --
 -- > optionalLongMods "option" "METAVAR" "help description" default
 --
--- @since 0.2
+-- @since 0.1.8
 optionalLongMods :: (HasMetavar f, HasName f, HasValue f) =>
   String -> String -> String -> a -> Mod f a
 optionalLongMods l meta h d =

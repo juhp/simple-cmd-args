@@ -2,6 +2,10 @@
 
 `simple-cmd-args` uses [PVP Versioning](https://pvp.haskell.org).
 
+## 0.1.8 (2022-08-03)
+- add *LongWith versions of *With and also *LongMods:
+  allows defining options with only a long option and no short option
+
 ## 0.1.7 (2021-06-28)
 - re-export maybeReader, eitherReader, and ReadM
 
