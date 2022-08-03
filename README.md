@@ -8,9 +8,13 @@
 A thin layer over optparse-applicative that avoids type plumbing for
 subcommands by using `Parser (IO ())`.
 
+Various wrapper functions are also provided for common option/arg idioms.
+
+See the library's [documentation](https://hackage.haskell.org/package/simple-cmd-args/docs/SimpleCmdArgs.html) for details of all the functions provided.
+
 ## Usage
 
-```console
+```shellsession
 $ cat readme.hs
 ```
 ```haskell
@@ -39,7 +43,7 @@ mkdir :: Bool -> FilePath -> IO ()
 mkdir parents =
   if parents then createDirectoryIfMissing True else createDirectory
 ```
-```console
+```shellsession
 $ ghc readme.hs
 $ ./readme --help
 readme example
@@ -56,6 +60,16 @@ Available commands:
   mkdir                    Create directory
 $ ./readme echo hello world
 hello world
+$ ./readme mkdir -h
+Usage: readme mkdir [-p|--parents] DIR
+  Create directory
+
+Available options:
+  -p,--parents             Make missing directories
+  -h,--help                Show this help text
 ```
 
-See more [examples](https://github.com/juhp/simple-cmd-args/tree/main/examples).
+# Examples
+See the [examples](https://github.com/juhp/simple-cmd-args/tree/main/examples).
+
+Hackage packages using this library: https://packdeps.haskellers.com/reverse/simple-cmd-args
