@@ -5,7 +5,7 @@ This library provides a thin layer on optparse-applicative
 argument and option parsing, using @Parser (IO ())@,
 applying commands directly to their argument parsing.
 
-A few option Mod functions are also provided.
+Some option Mod functions are also provided.
 -}
 
 module SimpleCmdArgs
@@ -18,15 +18,25 @@ module SimpleCmdArgs
    -- * Option and arg helpers
    strArg,
    switchWith,
+   switchLongWith,
    flagWith,
    flagWith',
+   flagLongWith,
+   flagLongWith',
    switchMods,
+   switchLongMods,
    strOptionWith,
+   strOptionLongWith,
    optionWith,
+   optionLongWith,
    optionMods,
+   optionLongMods,
    strOptionalWith,
+   strOptionalLongWith,
    optionalWith,
+   optionalLongWith,
    optionalMods,
+   optionalLongMods,
    argumentWith,
    -- * Re-exports from optparse-applicative
    Parser,
@@ -163,6 +173,15 @@ switchWith :: Char -> String -> String -> Parser Bool
 switchWith s l h =
   switch (switchMods s l h)
 
+-- | switchWith with only long option
+--
+-- > switchLongWith "option" "help description"
+--
+-- @since 0.2
+switchLongWith :: String -> String -> Parser Bool
+switchLongWith l h =
+  switch (switchLongMods l h)
+
 -- | flag with Mods
 --
 -- > flagWith offVal onVal 'f' "flag" "help description"
@@ -181,6 +200,24 @@ flagWith' :: a -> Char -> String -> String -> Parser a
 flagWith' val s l h =
   flag' val (switchMods s l h)
 
+-- | flagWith with only long option
+--
+-- > flagLongWith offVal onVal "flag" "help description"
+--
+-- @since 0.2
+flagLongWith :: a -> a -> String -> String -> Parser a
+flagLongWith off on l h =
+  flag off on (switchLongMods l h)
+
+-- | flagWith' with only long option
+--
+-- > flagLongWith' val "flag" "help description"
+--
+-- @since 0.2
+flagLongWith' :: a -> String -> String -> Parser a
+flagLongWith' val l h =
+  flag' val (switchLongMods l h)
+
 -- | @Mod@s for a switch.
 --
 -- > switchMods 'o' "option" "help description"
@@ -188,6 +225,14 @@ switchMods :: HasName f =>
   Char -> String -> String -> Mod f a
 switchMods s l h =
   short s <> long l <> help h
+
+-- | @Mod@s for a switch.
+--
+-- > switchLongMods "option" "help description"
+switchLongMods :: HasName f =>
+  String -> String -> Mod f a
+switchLongMods l h =
+  long l <> help h
 
 -- | strOption with Mods
 --
@@ -198,6 +243,15 @@ strOptionWith :: IsString s => Char -> String -> String -> String -> Parser s
 strOptionWith s l meta h =
   strOption (optionMods s l meta h)
 
+-- | strOptionWith with only long option
+--
+-- > strOptionLongWith "option" "METAVAR" "help description"
+--
+-- @since 0.2
+strOptionLongWith :: IsString s => String -> String -> String -> Parser s
+strOptionLongWith l meta h =
+  strOption (optionLongMods l meta h)
+
 -- | option with Mods
 --
 -- > optionWith auto 'o' "option" "METAVAR" "help description"
@@ -207,6 +261,15 @@ optionWith :: ReadM a -> Char -> String -> String -> String -> Parser a
 optionWith r s l meta h =
   option r (optionMods s l meta h)
 
+-- | optionWith with only long option
+--
+-- > optionLongWith auto "option" "METAVAR" "help description"
+--
+-- @since 0.2
+optionLongWith :: ReadM a -> String -> String -> String -> Parser a
+optionLongWith r l meta h =
+  option r (optionLongMods l meta h)
+
 -- | @Mod@s for a mandatory option.
 --
 -- > optionMods 'o' "option" "METAVAR" "help description"
@@ -214,6 +277,14 @@ optionMods :: (HasMetavar f, HasName f) =>
   Char -> String -> String -> String -> Mod f a
 optionMods s l meta h =
   short s <> long l <> metavar meta <> help h
+
+-- | optionMods with only long option
+--
+-- > optionLongMods "option" "METAVAR" "help description"
+optionLongMods :: (HasMetavar f, HasName f) =>
+  String -> String -> String -> Mod f a
+optionLongMods l meta h =
+  long l <> metavar meta <> help h
 
 -- | strOptional with Mods
 --
@@ -234,6 +305,25 @@ optionalWith :: ReadM a -> Char -> String -> String -> String -> a -> Parser a
 optionalWith r s l meta h d =
   option r (optionalMods s l meta h d)
 
+-- | strOptionalWith with only long option
+--
+-- > strOptionalLongWith "option" "METAVAR" "help description" default
+--
+-- @since 0.2
+strOptionalLongWith :: (IsString s, Show s)
+                => String -> String -> String -> s -> Parser s
+strOptionalLongWith l meta h d =
+  strOption (optionalLongMods l meta (h <> " [default: " <> show d <> "]") d)
+
+-- | optionalWith with only long option
+--
+-- > optionalLongWith auto "option" "METAVAR" "help description" default
+--
+-- @since 0.2
+optionalLongWith :: ReadM a -> String -> String -> String -> a -> Parser a
+optionalLongWith r l meta h d =
+  option r (optionalLongMods l meta h d)
+
 -- | @Mod@s for an optional option: includes a default value.
 --
 -- > optionalMods 'o' "option" "METAVAR" "help description" default
@@ -241,6 +331,16 @@ optionalMods :: (HasMetavar f, HasName f, HasValue f) =>
   Char -> String -> String -> String -> a -> Mod f a
 optionalMods s l meta h d =
   short s <> long l <> metavar meta <> help h <> value d
+
+-- | optionalMods with only long option
+--
+-- > optionalLongMods "option" "METAVAR" "help description" default
+--
+-- @since 0.2
+optionalLongMods :: (HasMetavar f, HasName f, HasValue f) =>
+  String -> String -> String -> a -> Mod f a
+optionalLongMods l meta h d =
+  long l <> metavar meta <> help h <> value d
 
 -- | argument with METAVAR
 --
